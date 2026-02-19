@@ -28,11 +28,15 @@ def build_llm(settings: Settings) -> BaseChatModel:
     if provider == "openai":
         from langchain_openai import ChatOpenAI
 
-        return ChatOpenAI(
-            model=settings.llm_model,
-            api_key=settings.openai_api_key,
-            temperature=0,
-        )
+        kwargs: dict = {
+            "model": settings.llm_model,
+            "api_key": settings.openai_api_key,
+            "temperature": 0,
+        }
+        if settings.openai_base_url:
+            kwargs["base_url"] = settings.openai_base_url
+
+        return ChatOpenAI(**kwargs)
 
     raise ValueError(
         f"Unsupported LLM provider: '{provider}'. Choose 'anthropic' or 'openai'."
