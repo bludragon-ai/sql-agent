@@ -31,7 +31,10 @@ class Settings:
 
     # Database
     database_path: str = field(
-        default_factory=lambda: os.getenv("DATABASE_PATH", "data/sample.db")
+        default_factory=lambda: os.getenv(
+            "DATABASE_PATH",
+            str(Path(__file__).resolve().parent.parent / "data" / "sample.db"),
+        )
     )
 
     # Safety
