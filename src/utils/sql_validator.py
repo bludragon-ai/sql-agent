@@ -7,7 +7,7 @@ import re
 # Statements that mutate data or schema.
 _WRITE_PATTERNS: list[re.Pattern[str]] = [
     re.compile(r"\b(INSERT|UPDATE|DELETE|DROP|ALTER|CREATE|TRUNCATE|REPLACE|MERGE)\b", re.I),
-    re.compile(r"\bINTO\b", re.I),  # catches SELECT … INTO
+    re.compile(r"\bSELECT\b[^;]*\bINTO\b", re.I),  # catches SELECT … INTO (table creation)
     re.compile(r";\s*\w", re.I),     # multiple statements (injection vector)
 ]
 

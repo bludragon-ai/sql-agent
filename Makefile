@@ -1,4 +1,4 @@
-.PHONY: help install dev seed run test lint clean docker-up docker-down
+.PHONY: help install dev seed run test lint clean docker-up docker-down setup
 
 help: ## Show this help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-15s\033[0m %s\n", $$1, $$2}'
@@ -31,3 +31,6 @@ docker-up: ## Start with Docker Compose
 
 docker-down: ## Stop Docker Compose services
 	docker compose down
+
+setup: ## One-command project setup
+	python -m venv venv && . venv/bin/activate && pip install -e ".[dev]" && cp -n .env.example .env && make seed && echo "Ready! Edit .env with your API key, then: make run"

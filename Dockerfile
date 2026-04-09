@@ -17,9 +17,12 @@ COPY . .
 # Seed the database
 RUN python -m src.database.seed
 
+RUN useradd --create-home appuser && chown -R appuser:appuser /app
+USER appuser
+
 EXPOSE 8501
 
-HEALTHCHECK CMD curl --fail http://localhost:8501/_stcore/health || exit 1
+HEALTHCHECK CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:8501/_stcore/health')" || exit 1
 
 ENTRYPOINT ["streamlit", "run", "src/ui/app.py", \
     "--server.port=8501", \
