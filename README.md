@@ -10,6 +10,10 @@ Built with [LangChain](https://python.langchain.com/), [Streamlit](https://strea
 
 ---
 
+## Demo
+
+![SQL Agent Screenshot](docs/screenshot.png)
+
 ## Architecture
 
 ```
